@@ -12,9 +12,14 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                sh 'docker run -d -p 5000:5000 --name hello-pradnya hello-pradnya'
-            }
-        }
+    steps {
+        // Remove old container if exists
+        sh 'docker rm -f hello-pradnya || true'
+        // Build and run new container
+        sh 'docker build -t hello-pradnya .'
+        sh 'docker run -d -p 5000:5000 --name hello-pradnya hello-pradnya'
     }
 }
+
+        }
+    }
